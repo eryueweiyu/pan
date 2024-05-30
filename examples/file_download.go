@@ -2,8 +2,8 @@ package main
 
 import (
 	"fmt"
-	"github.com/jsyzchen/pan/conf"
-	"github.com/jsyzchen/pan/file"
+	"github.com/eryueweiyu/pan/conf"
+	"github.com/eryueweiyu/pan/file"
 )
 
 func main() {

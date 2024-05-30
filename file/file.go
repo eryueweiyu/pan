@@ -4,67 +4,67 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
-	"github.com/jsyzchen/pan/conf"
-	"github.com/jsyzchen/pan/utils/httpclient"
+	"github.com/eryueweiyu/pan/conf"
+	"github.com/eryueweiyu/pan/utils/httpclient"
 	"log"
 	"net/url"
 	"strconv"
 )
 
 const (
-	ListUri = "/rest/2.0/xpan/file?method=list"
-	MetasUri = "/rest/2.0/xpan/multimedia?method=filemetas"
+	ListUri      = "/rest/2.0/xpan/file?method=list"
+	MetasUri     = "/rest/2.0/xpan/multimedia?method=filemetas"
 	StreamingUri = "/rest/2.0/xpan/file?method=streaming"
 )
 
 type ListResponse struct {
 	conf.CloudDiskResponseBase
 	List []struct {
-		FsID 	uint64 `json:"fs_id"`
-		Path      string `json:"path"`
-		ServerFileName string `json:"server_filename"`
-		Size      int    `json:"size"`
-		IsDir    int    `json:"isdir"`
-		Category    int    `json:"category"`
-		Md5       string `json:"md5"`
-		DirEmpty string `json:"dir_empty"`
-		Thumbs map[string]string `json:"thumbs"`
-		LocalCtime     int    `json:"local_ctime"`
-		LocalMtime     int    `json:"local_mtime"`
-		ServerCtime     int    `json:"server_ctime"`
-		ServerMtime     int    `json:"server_mtime"`
+		FsID           uint64            `json:"fs_id"`
+		Path           string            `json:"path"`
+		ServerFileName string            `json:"server_filename"`
+		Size           int               `json:"size"`
+		IsDir          int               `json:"isdir"`
+		Category       int               `json:"category"`
+		Md5            string            `json:"md5"`
+		DirEmpty       string            `json:"dir_empty"`
+		Thumbs         map[string]string `json:"thumbs"`
+		LocalCtime     int               `json:"local_ctime"`
+		LocalMtime     int               `json:"local_mtime"`
+		ServerCtime    int               `json:"server_ctime"`
+		ServerMtime    int               `json:"server_mtime"`
 	}
 }
 
 type MetasResponse struct {
-	ErrorCode int  	 `json:"errno"`
-	ErrorMsg  string `json:"errmsg"`
-	RequestID int
+	ErrorCode    int    `json:"errno"`
+	ErrorMsg     string `json:"errmsg"`
+	RequestID    int
 	RequestIDStr string `json:"request_id"`
-	List []struct {
-		FsID 	uint64 `json:"fs_id"`
-		Path      string `json:"path"`
-		Category    int    `json:"category"`
-		FileName string `json:"filename"`
-		IsDir    int    `json:"isdir"`
-		Size      int    `json:"size"`
-		Md5       string `json:"md5"`
-		DLink string `json:"dlink"`
-		Thumbs map[string]string `json:"thumbs"`
-		ServerCtime     int    `json:"server_ctime"`
-		ServerMtime     int    `json:"server_mtime"`
-		DateTaken int `json:"date_taken"`
-		Width int `json:"width"`
-		Height int `json:"height"`
+	List         []struct {
+		FsID        uint64            `json:"fs_id"`
+		Path        string            `json:"path"`
+		Category    int               `json:"category"`
+		FileName    string            `json:"filename"`
+		IsDir       int               `json:"isdir"`
+		Size        int               `json:"size"`
+		Md5         string            `json:"md5"`
+		DLink       string            `json:"dlink"`
+		Thumbs      map[string]string `json:"thumbs"`
+		ServerCtime int               `json:"server_ctime"`
+		ServerMtime int               `json:"server_mtime"`
+		DateTaken   int               `json:"date_taken"`
+		Width       int               `json:"width"`
+		Height      int               `json:"height"`
 	}
 }
 
 type ManagerResponse struct {
 	conf.CloudDiskResponseBase
-	Info []struct{
-		Path string
+	Info []struct {
+		Path   string
 		TaskID int
-		Errno int
+		Errno  int
 	}
 }
 
@@ -104,7 +104,7 @@ func (f *File) List(dir string, start, limit int) (ListResponse, error) {
 		return ret, err
 	}
 
-	if ret.ErrorCode != 0 {//错误码不为0
+	if ret.ErrorCode != 0 { //错误码不为0
 		return ret, errors.New(fmt.Sprintf("error_code:%d, error_msg:%s", ret.ErrorCode, ret.ErrorMsg))
 	}
 
@@ -143,7 +143,7 @@ func (f *File) Metas(fsIDs []uint64) (MetasResponse, error) {
 		return ret, err
 	}
 
-	if ret.ErrorCode != 0 {//错误码不为0
+	if ret.ErrorCode != 0 { //错误码不为0
 		return ret, errors.New(fmt.Sprintf("error_code:%d, error_msg:%s", ret.ErrorCode, ret.ErrorMsg))
 	}
 

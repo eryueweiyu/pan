@@ -1,7 +1,7 @@
 package file
 
 import (
-	"github.com/jsyzchen/pan/conf"
+	"github.com/eryueweiyu/pan/conf"
 	"testing"
 )
 
